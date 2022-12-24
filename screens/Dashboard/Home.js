@@ -10,7 +10,12 @@ import {
   images,
   dummyData,
 } from "../../constants";
-import { IconButton, TextButton, VerticalCourseCard } from "../../components";
+import {
+  IconButton,
+  LineDivider,
+  TextButton,
+  VerticalCourseCard,
+} from "../../components";
 
 const Home = () => {
   function renderHeader() {
@@ -132,6 +137,8 @@ const Home = () => {
         {renderStartLearning()}
 
         {renderCourses()}
+
+        <LineDivider lineStyle={{ marginVertical: SIZES.padding }} />
       </ScrollView>
     </View>
   );
