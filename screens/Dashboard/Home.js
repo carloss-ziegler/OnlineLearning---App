@@ -199,6 +199,13 @@ const Home = () => {
               }}
             />
           )}
+          ItemSeparatorComponent={() => (
+            <LineDivider
+              lineStyle={{
+                backgroundColor: COLORS.gray20,
+              }}
+            />
+          )}
         />
       </Section>
     );
