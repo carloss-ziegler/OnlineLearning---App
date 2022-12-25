@@ -11,11 +11,36 @@ import {
   dummyData,
 } from "../../constants";
 import {
+  CategoryCard,
+  HorizontalCourseCard,
   IconButton,
   LineDivider,
   TextButton,
   VerticalCourseCard,
 } from "../../components";
+import { StatusBar } from "expo-status-bar";
+
+const Section = ({ containerStyle, title, onPress, children }) => {
+  return (
+    <View style={{ ...containerStyle }}>
+      <View style={{ flexDirection: "row", paddingHorizontal: SIZES.padding }}>
+        <Text style={{ flex: 1, ...FONTS.h2, fontWeight: "600" }}>{title}</Text>
+
+        <TextButton
+          contentContainerStyle={{
+            width: 80,
+            borderRadius: 30,
+            backgroundColor: COLORS.primary,
+          }}
+          label="See All"
+          onPress={onPress}
+        />
+      </View>
+
+      {children}
+    </View>
+  );
+};
 
 const Home = () => {
   function renderHeader() {
@@ -126,8 +151,62 @@ const Home = () => {
     );
   }
 
+  function renderCategories() {
+    return (
+      <Section title="Categories">
+        <FlatList
+          horizontal
+          data={dummyData.categories}
+          listKey="Categories"
+          keyExtractor={(item) => item.id}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            marginTop: SIZES.radius,
+          }}
+          renderItem={({ item, index }) => (
+            <CategoryCard
+              category={item}
+              containerStyle={{
+                marginLeft: index == 0 ? SIZES.padding : SIZES.base,
+                marginRight:
+                  index == dummyData.categories.length - 1 ? SIZES.padding : 0,
+              }}
+            />
+          )}
+        />
+      </Section>
+    );
+  }
+
+  function renderPopularCourses() {
+    return (
+      <Section title="Popular Courses" containerStyle={{ marginTop: 30 }}>
+        <FlatList
+          data={dummyData.courses_list_2}
+          listKey="PopularCourses"
+          scrollEnabled={false}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={{
+            marginTop: SIZES.radius,
+            paddingHorizontal: SIZES.padding,
+          }}
+          renderItem={({ item, index }) => (
+            <HorizontalCourseCard
+              course={item}
+              containerStyle={{
+                marginVertical: SIZES.padding,
+                marginTop: index == 0 ? SIZES.radius : SIZES.padding,
+              }}
+            />
+          )}
+        />
+      </Section>
+    );
+  }
+
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.white }}>
+      <StatusBar style="dark" />
       {renderHeader()}
 
       <ScrollView
@@ -139,6 +218,10 @@ const Home = () => {
         {renderCourses()}
 
         <LineDivider lineStyle={{ marginVertical: SIZES.padding }} />
+
+        {renderCategories()}
+
+        {renderPopularCourses()}
       </ScrollView>
     </View>
   );
