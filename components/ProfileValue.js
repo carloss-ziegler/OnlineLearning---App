@@ -1,8 +1,16 @@
 import { View, Text, TouchableOpacity, Image, Switch } from "react-native";
 import React, { useState } from "react";
 import { COLORS, FONTS, SIZES, icons } from "../constants";
+import { connect } from "react-redux";
 
-const ProfileValue = ({ icon, label, value, onPress, notification }) => {
+const ProfileValue = ({
+  icon,
+  label,
+  value,
+  onPress,
+  notification,
+  appTheme,
+}) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
@@ -18,7 +26,7 @@ const ProfileValue = ({ icon, label, value, onPress, notification }) => {
           alignItems: "center",
           justifyContent: "center",
           borderRadius: 20,
-          backgroundColor: COLORS.additionalColor11,
+          backgroundColor: appTheme?.backgroundColor3,
         }}
       >
         <Image
@@ -42,7 +50,7 @@ const ProfileValue = ({ icon, label, value, onPress, notification }) => {
           <Text style={{ color: COLORS.gray30, ...FONTS.body3 }}>{label}</Text>
         )}
 
-        <Text style={{ ...FONTS.h3 }}>{value}</Text>
+        <Text style={{ ...FONTS.h3, color: appTheme?.textColor }}>{value}</Text>
       </View>
 
       {notification ? (
@@ -54,6 +62,7 @@ const ProfileValue = ({ icon, label, value, onPress, notification }) => {
             style={{
               width: 15,
               height: 15,
+              tintColor: appTheme?.tintColor,
             }}
           />
         </>
@@ -62,4 +71,14 @@ const ProfileValue = ({ icon, label, value, onPress, notification }) => {
   );
 };
 
-export default ProfileValue;
+function mapStateToProps(state) {
+  return {
+    appTheme: state.appTheme,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileValue);

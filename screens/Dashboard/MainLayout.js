@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { View, Text, Animated, TouchableOpacity, Image } from "react-native";
 
 import { Home, Profile, Search } from "../../screens";
-import { COLORS, SIZES, constants, FONTS } from "../../constants";
+import { COLORS, SIZES, constants } from "../../constants";
 import { Shadow } from "react-native-shadow-2";
+import { connect } from "react-redux";
 
 const bottom_tabs = constants.bottom_tabs.map((bottom_tab) => ({
   ...bottom_tab,
@@ -103,7 +104,7 @@ const Tabs = ({ scrollX, onBottomTabPress }) => {
   );
 };
 
-const MainLayout = () => {
+const MainLayout = ({ appTheme }) => {
   const flatListRef = useRef();
   const scrollX = useRef(new Animated.Value(0)).current;
 
@@ -155,9 +156,10 @@ const MainLayout = () => {
     return (
       <View
         style={{
-          marginBottom: 20,
+          paddingBottom: SIZES.height > 800 ? 20 : 5,
           paddingHorizontal: SIZES.padding,
           paddingVertical: SIZES.radius,
+          backgroundColor: appTheme?.backgroundColor1,
         }}
       >
         <Shadow style={{ height: 70, width: SIZES.width - SIZES.padding * 2 }}>
@@ -165,7 +167,7 @@ const MainLayout = () => {
             style={{
               flex: 1,
               borderRadius: SIZES.radius,
-              backgroundColor: COLORS.primary3,
+              backgroundColor: appTheme?.backgroundColor2,
             }}
           >
             <Tabs onBottomTabPress={onBottomTabPress} scrollX={scrollX} />
@@ -184,4 +186,14 @@ const MainLayout = () => {
   );
 };
 
-export default MainLayout;
+function mapStateToProps(state) {
+  return {
+    appTheme: state.appTheme,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainLayout);

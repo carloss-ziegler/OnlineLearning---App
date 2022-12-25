@@ -17,8 +17,19 @@ import {
 } from "../../components";
 
 import { SIZES, COLORS, FONTS, icons, images } from "../../constants";
+import { connect } from "react-redux";
+import { toggleTheme } from "../../stores/themeActions";
+import appTheme from "../../constants/theme";
 
-const Profile = () => {
+const Profile = ({ appTheme, toggleTheme }) => {
+  function toggleThemeHandler() {
+    if (appTheme?.name == "light") {
+      toggleTheme("dark");
+    } else {
+      toggleTheme("light");
+    }
+  }
+
   function renderHeader() {
     return (
       <View
@@ -29,13 +40,18 @@ const Profile = () => {
           justifyContent: "space-between",
         }}
       >
-        <Text style={{ ...FONTS.h1, fontWeight: "600" }}>Profile</Text>
+        <Text
+          style={{ ...FONTS.h1, fontWeight: "600", color: appTheme?.textColor }}
+        >
+          Profile
+        </Text>
 
         <IconButton
           icon={icons.sun}
           iconStyle={{
-            tintColor: COLORS.black,
+            tintColor: appTheme?.tintColor,
           }}
+          onPress={() => toggleThemeHandler()}
         />
       </View>
     );
@@ -50,7 +66,7 @@ const Profile = () => {
           paddingHorizontal: SIZES.radius,
           paddingVertical: 20,
           borderRadius: SIZES.radius,
-          backgroundColor: COLORS.primary3,
+          backgroundColor: appTheme?.backgroundColor2,
         }}
       >
         <TouchableOpacity
@@ -149,10 +165,10 @@ const Profile = () => {
               marginTop: SIZES.padding,
               paddingHorizontal: SIZES.radius,
               borderRadius: 20,
-              backgroundColor: COLORS.white,
+              backgroundColor: appTheme?.backgroundColor4,
             }}
             labelStyle={{
-              color: COLORS.primary,
+              color: appTheme?.textColor2,
             }}
           />
         </View>
@@ -221,7 +237,7 @@ const Profile = () => {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.white }}>
+    <View style={{ flex: 1, backgroundColor: appTheme?.backgroundColor1 }}>
       {renderHeader()}
 
       <ScrollView
@@ -246,8 +262,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: SIZES.padding,
     borderWidth: 1,
     borderRadius: SIZES.radius,
-    borderColor: COLORS.gray20,
+    borderColor: appTheme?.name == "dark" ? COLORS.gray50 : COLORS.gray20,
   },
 });
 
-export default Profile;
+function mapStateToProps(state) {
+  return {
+    appTheme: state.appTheme,
+    error: state.error,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    toggleTheme: (themeType) => {
+      return dispatch(toggleTheme(themeType));
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

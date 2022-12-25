@@ -19,6 +19,7 @@ import {
   VerticalCourseCard,
 } from "../../components";
 import { StatusBar } from "expo-status-bar";
+import { useNavigation } from "@react-navigation/native";
 
 const Section = ({ containerStyle, title, onPress, children }) => {
   return (
@@ -43,6 +44,7 @@ const Section = ({ containerStyle, title, onPress, children }) => {
 };
 
 const Home = () => {
+  const navigation = useNavigation();
   const [currentDate, setCurrentDate] = useState();
 
   const days = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
@@ -196,12 +198,19 @@ const Home = () => {
           }}
           renderItem={({ item, index }) => (
             <CategoryCard
+              sharedElementPrefix="Home"
               category={item}
               containerStyle={{
                 marginLeft: index == 0 ? SIZES.padding : SIZES.base,
                 marginRight:
                   index == dummyData.categories.length - 1 ? SIZES.padding : 0,
               }}
+              onPress={() =>
+                navigation.navigate("CourseListing", {
+                  category: item,
+                  sharedElementPrefix: "Home",
+                })
+              }
             />
           )}
         />
@@ -248,7 +257,7 @@ const Home = () => {
       {renderHeader()}
 
       <ScrollView
-        contentContainerStyle={{ paddingBottom: 150 }}
+        contentContainerStyle={{ paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}
       >
         {renderStartLearning()}
