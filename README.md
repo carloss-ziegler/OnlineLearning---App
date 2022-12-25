@@ -23,4 +23,4 @@ App in React Native built using
 ### Profile
 ![App Screenshot](https://github.com/carloss-ziegler/OnlineLearning---App/blob/main/assets/ScreenShots/4.jpeg?raw=true)
 ### Profile (2)
-![App Screenshot](https://github.com/carloss-ziegler/OnlineLearning---App/blob/main/assets/ScreenShots/5.jpeg?raw=true)
+![App Screenshot](https://github.com/carloss-ziegler/OnlineLearning---App/blob/main/assets/ScreenShots/6.jpeg?raw=true)
