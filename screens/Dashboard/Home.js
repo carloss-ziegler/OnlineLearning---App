@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, ImageBackground, Image } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
@@ -43,6 +43,37 @@ const Section = ({ containerStyle, title, onPress, children }) => {
 };
 
 const Home = () => {
+  const [currentDate, setCurrentDate] = useState();
+
+  const days = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
+
+  const months = [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro",
+  ];
+
+  useEffect(() => {
+    const date = new Date();
+
+    let day = date.getDate();
+    let weekDay = date.getDay();
+    let month = date.getMonth();
+    let year = date.getFullYear();
+
+    let currentDate = `${days[weekDay]}, ${day} de ${months[month]} de ${year}`;
+    setCurrentDate(currentDate);
+  }, []);
+
   function renderHeader() {
     return (
       <View
@@ -59,7 +90,7 @@ const Home = () => {
             Hello, <Text style={{}}>Carlos Henrique</Text>!
           </Text>
           <Text style={{ color: COLORS.gray50, ...FONTS.body3 }}>
-            Sábado, 24th Dec 2022
+            {currentDate}
           </Text>
         </View>
 
