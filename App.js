@@ -6,7 +6,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import themeReducer from "./stores/themeReducer";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 
-import { MainLayout, CourseListing } from "./screens";
+import { MainLayout, CourseListing, CourseDetails } from "./screens";
 
 const Stack = createSharedElementStackNavigator();
 const options = {
@@ -52,6 +52,7 @@ const App = () => {
             component={CourseListing}
             options={() => options}
           />
+          <Stack.Screen name="CourseDetails" component={CourseDetails} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
