@@ -1,7 +1,7 @@
 
 # Online Learning App
 
-App in React Native built using
+App built using
 
 
 
