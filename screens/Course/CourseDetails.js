@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -20,6 +20,7 @@ import {
   icons,
 } from "../../constants";
 import { StatusBar } from "expo-status-bar";
+import CourseChapters from "./CourseTabs/CourseChapters";
 
 const course_details_tabs = constants.course_details_tabs.map(
   (course_details_tab) => ({
@@ -60,7 +61,7 @@ const TabIndicator = ({ measureLayout, scrollX }) => {
   );
 };
 
-const Tabs = ({ scrollX }) => {
+const Tabs = ({ scrollX, onTabPress }) => {
   const [measureLayout, setMeasureLayout] = useState([]);
   const containerRef = useRef();
 
@@ -109,6 +110,7 @@ const Tabs = ({ scrollX }) => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            onPress={() => onTabPress(index)}
           >
             <Text
               style={{
@@ -135,6 +137,12 @@ const CourseDetails = ({ route, navigation }) => {
 
   const [playVideo, setPlayVideo] = useState(false);
   const [status, setStatus] = useState({});
+
+  const onTabPress = useCallback((tabIndex) => {
+    flatListRef?.current?.scrollToOffset({
+      offset: tabIndex * SIZES.width,
+    });
+  });
 
   function renderHeaderComponents() {
     return (
@@ -300,7 +308,7 @@ const CourseDetails = ({ route, navigation }) => {
     return (
       <View style={{ flex: 1 }}>
         <View style={{ height: 60 }}>
-          <Tabs scrollX={scrollX} />
+          <Tabs scrollX={scrollX} onTabPress={onTabPress} />
         </View>
 
         <LineDivider
@@ -329,7 +337,7 @@ const CourseDetails = ({ route, navigation }) => {
           renderItem={({ item, index }) => {
             return (
               <View style={{ width: SIZES.width }}>
-                {index == 0 && <Text>Chapters</Text>}
+                {index == 0 && <CourseChapters />}
                 {index == 1 && <Text>Files</Text>}
                 {index == 2 && <Text>Discusions</Text>}
               </View>
