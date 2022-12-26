@@ -8,7 +8,7 @@ import Animated, {
   WithTimingConfig,
 } from "react-native-reanimated";
 import { COLORS, SIZES, FONTS, icons, constants } from "../constants";
-import { LineDivider, TextButton } from "../components";
+import { LineDivider, TextButton, TwoPointSlider } from "../components";
 
 const ClassTypeOption = ({
   containerStyle,
@@ -146,6 +146,63 @@ const FilterModal = ({ filterModalSharedValue1, filterModalSharedValue2 }) => {
       ],
     };
   });
+
+  function renderFooter() {
+    return (
+      <View
+        style={{
+          flexDirection: "row",
+          height: 50,
+          marginBottom: 30,
+          paddingHorizontal: SIZES.padding,
+        }}
+      >
+        <TextButton
+          label="Reset"
+          contentContainerStyle={{
+            flex: 1,
+            borderRadius: SIZES.radius,
+            borderWidth: 1,
+            backgroundColor: null,
+          }}
+          labelStyle={{
+            color: COLORS.black,
+            ...FONTS.h3,
+            fontWeight: "500",
+          }}
+        />
+
+        <TextButton
+          label="Apply"
+          contentContainerStyle={{
+            flex: 1,
+            marginLeft: SIZES.radius,
+            borderRadius: SIZES.radius,
+            borderWidth: 2,
+            borderColor: COLORS.primary,
+            backgroundColor: COLORS.primary,
+          }}
+          labelStyle={{
+            color: COLORS.white,
+            ...FONTS.h3,
+            fontWeight: "500",
+          }}
+          onPress={() => {
+            filterModalSharedValue2.value = withTiming(SIZES.height, {
+              duration: 500,
+            });
+
+            filterModalSharedValue1.value = withDelay(
+              500,
+              withTiming(SIZES.height, {
+                duration: 100,
+              })
+            );
+          }}
+        />
+      </View>
+    );
+  }
 
   return (
     <Animated.View
@@ -286,7 +343,88 @@ const FilterModal = ({ filterModalSharedValue1, filterModalSharedValue2 }) => {
                 })}
               </View>
             </View>
+
+            <View
+              style={{
+                marginTop: SIZES.radius,
+              }}
+            >
+              <Text
+                style={{
+                  ...FONTS.h3,
+                  fontWeight: "500",
+                }}
+              >
+                Created Within
+              </Text>
+
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                }}
+              >
+                {constants.created_within.map((item, index) => {
+                  return (
+                    <TextButton
+                      key={index}
+                      label={item?.label}
+                      contentContainerStyle={{
+                        height: 45,
+                        paddingHorizontal: SIZES.radius,
+                        marginLeft: index % 3 == 0 ? 0 : SIZES.radius,
+                        marginTop: SIZES.radius,
+                        borderWidth: 1,
+                        borderRadius: SIZES.radius,
+                        borderColor: COLORS.gray20,
+                        backgroundColor:
+                          item?.id == selectedCreatedWithin
+                            ? COLORS.primary3
+                            : null,
+                      }}
+                      labelStyle={{
+                        color:
+                          item?.id == selectedCreatedWithin
+                            ? COLORS.white
+                            : COLORS.black,
+                        ...FONTS.body4,
+                      }}
+                      onPress={() => {
+                        setSelectedCreatedWithin(item.id);
+                      }}
+                    />
+                  );
+                })}
+              </View>
+            </View>
+
+            <View
+              style={{
+                marginTop: SIZES.padding,
+              }}
+            >
+              <Text style={{ ...FONTS.h3, fontWeight: "500" }}>
+                Class Lenght
+              </Text>
+
+              <View
+                style={{
+                  alignItems: "center",
+                }}
+              >
+                <TwoPointSlider
+                  values={[20, 50]}
+                  min={15}
+                  max={60}
+                  postfix="min"
+                  onValuesChange={(values) => console.log(values)}
+                />
+              </View>
+            </View>
           </ScrollView>
+
+          {renderFooter()}
         </Animated.View>
       </Animated.View>
     </Animated.View>

@@ -8,6 +8,7 @@ import HorizontalCourseCard from "./HorizontalCourseCard";
 import ProgressBar from "./ProgressBar";
 import ProfileValue from "./ProfileValue";
 import FilterModal from "./FilterModal";
+import TwoPointSlider from "./TwoPointSlider";
 
 export {
   IconButton,
@@ -20,4 +21,5 @@ export {
   ProgressBar,
   ProfileValue,
   FilterModal,
+  TwoPointSlider,
 };
