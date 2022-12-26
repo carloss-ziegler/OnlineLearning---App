@@ -14,11 +14,11 @@ const options = {
   transitionSpec: {
     open: {
       animation: "timing",
-      config: { duration: 400, easing: Easing.inOut(Easing.ease) },
+      config: { duration: 300, easing: Easing.inOut(Easing.ease) },
     },
     close: {
       animation: "timing",
-      config: { duration: 400, easing: Easing.inOut(Easing.ease) },
+      config: { duration: 300, easing: Easing.inOut(Easing.ease) },
     },
   },
   cardStyleInterpolator: ({ current: { progress } }) => {

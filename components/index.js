@@ -7,6 +7,7 @@ import CategoryCard from "./CategoryCard";
 import HorizontalCourseCard from "./HorizontalCourseCard";
 import ProgressBar from "./ProgressBar";
 import ProfileValue from "./ProfileValue";
+import FilterModal from "./FilterModal";
 
 export {
   IconButton,
@@ -18,4 +19,5 @@ export {
   HorizontalCourseCard,
   ProgressBar,
   ProfileValue,
+  FilterModal,
 };
