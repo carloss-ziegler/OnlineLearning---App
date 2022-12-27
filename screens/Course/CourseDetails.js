@@ -21,6 +21,7 @@ import {
 } from "../../constants";
 import { StatusBar } from "expo-status-bar";
 import CourseChapters from "./CourseTabs/CourseChapters";
+import CourseFiles from "./CourseTabs/CourseFiles";
 
 const course_details_tabs = constants.course_details_tabs.map(
   (course_details_tab) => ({
@@ -338,7 +339,7 @@ const CourseDetails = ({ route, navigation }) => {
             return (
               <View style={{ width: SIZES.width }}>
                 {index == 0 && <CourseChapters />}
-                {index == 1 && <Text>Files</Text>}
+                {index == 1 && <CourseFiles />}
                 {index == 2 && <Text>Discusions</Text>}
               </View>
             );
